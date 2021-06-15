@@ -15,6 +15,8 @@ function Chat() {
         e.preventDefault();
 
         console.log("You have typed -> ",input);
+
+        setInput('');
     }
 
     return (
