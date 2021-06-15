@@ -1,13 +1,22 @@
 import { Avatar, IconButton } from '@material-ui/core'
-import { MoreVert, SearchOutlined } from '@material-ui/icons';
+import { MoreVert, SearchOutlined , Mic, AttachFile  } from '@material-ui/icons';
 import React  ,{useState , useEffect} from 'react'
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon'
 import "./Chat.css"
 function Chat() {
     const [seed , setSeed] = useState('');
-
+    const [input , setInput] = useState('');
     useEffect(()=>{
         setSeed(Math.floor(Math.random()*5000))
     } , [])
+    
+    const sendMessage = (e)=>{
+
+        e.preventDefault();
+
+        console.log("You have typed -> ",input);
+    }
+
     return (
         <div className = "chat">
             <div className = "chat_header">
@@ -31,10 +40,29 @@ function Chat() {
 
             </div>
             <div className = "chat_body" >
-                {/* <h1>dsfds</h1> */}
+                
+                <p className = {`chat_message ${true&&"chat_reciever"}`}>
+                <span className = "chat_name">
+                    Kshitij Anand
+                </span>
+                This is a message
+                <span className = "chat_timestamp">4:30pm</span>
+                </p>
             </div>
 
-            <div className = "chat_footer"></div>
+            <div className = "chat_footer">
+                <InsertEmoticonIcon/>
+                <AttachFile/>
+                <form >
+                    <input type = "text" value = {input}  onChange = {(e)=>{
+                        setInput(e.target.value);
+                    }} placeholder = "Start typing something">
+
+                    </input>
+                    <button onClick ={sendMessage}  type = "submit">Send a message</button>
+                </form>
+                <Mic />
+            </div>
         </div>
     )
 }
