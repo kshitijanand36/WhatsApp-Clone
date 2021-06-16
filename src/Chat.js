@@ -2,13 +2,27 @@ import { Avatar, IconButton } from '@material-ui/core'
 import { MoreVert, SearchOutlined , Mic, AttachFile  } from '@material-ui/icons';
 import React  ,{useState , useEffect} from 'react'
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon'
+import {useParams} from "react-router-dom";
+import db from "./firebase";
 import "./Chat.css"
 function Chat() {
     const [seed , setSeed] = useState('');
     const [input , setInput] = useState('');
+
+    const [roomName , setRoomName] = useState('');
+    const {roomId} = useParams();
     useEffect(()=>{
         setSeed(Math.floor(Math.random()*5000))
     } , [])
+
+    useEffect(()=>{
+
+        if(roomId){
+
+            db.collection("Rooms").doc(roomId).onSnapshot((snapshot)=> setRoomName(snapshot.data().name));
+        }
+
+    } , [roomId]); 
     
     const sendMessage = (e)=>{
 
@@ -24,7 +38,7 @@ function Chat() {
             <div className = "chat_header">
                 <Avatar src = {`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <div className = "chat_headerInfo">
-                    <h3> Room name</h3>
+                    <h3> {roomName}</h3>
                     <p>Last seen at  ..</p>
 
                 </div>
@@ -53,8 +67,13 @@ function Chat() {
             </div>
 
             <div className = "chat_footer">
+            <IconButton>
                 <InsertEmoticonIcon/>
+            </IconButton>
+            <IconButton>
                 <AttachFile/>
+
+            </IconButton>
                 <form >
                     <input type = "text" value = {input}  onChange = {(e)=>{
                         setInput(e.target.value);
