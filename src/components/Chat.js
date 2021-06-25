@@ -22,7 +22,7 @@ function Chat() {
     useEffect(()=>{
 
         if(roomId){
-
+            
             db.collection("Rooms").doc(roomId).onSnapshot((snapshot)=> setRoomName(snapshot.data().name));
             db.collection("Rooms").doc(roomId).collection("messages").orderBy('timestamp' , 'asc').onSnapshot((snapshot)=>{
               return setMessages(snapshot.docs.map(doc =>{
@@ -37,12 +37,14 @@ function Chat() {
 
         e.preventDefault();
         console.log("You have typed -> ",input);
-        db.collection("Rooms").doc(roomId).collection("messages").add({
-            name : user.displayName,
-            message: input,
-            timestamp : firebase.firestore.FieldValue.serverTimestamp()
-
-        })
+        if(input.length > 0){
+            db.collection("Rooms").doc(roomId).collection("messages").add({
+                name : user.displayName,
+                message: input,
+                timestamp : firebase.firestore.FieldValue.serverTimestamp()
+    
+            })
+        }
         setInput('');
     }
 
@@ -52,7 +54,9 @@ function Chat() {
                 <Avatar src = {`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <div className = "chat_headerInfo">
                     <h3> {roomName}</h3>
-                    <p>Last seen at  {messages.length >0 ? new Date(messages[messages.length-1]?.timestamp?.toDate()).toUTCString() : ""}</p>
+                    <p>Last seen at  {messages.length >0 ? new Date(messages[messages.length-1]?.timestamp?.toDate()).toLocaleString(undefined, {
+                    timeZone: "Asia/Kolkata" 
+                }) : ""}</p>
 
                 </div>
                 <div className ='chat_headerRight' >
@@ -94,7 +98,7 @@ function Chat() {
                 <AttachFile/>
 
             </IconButton>
-                <form >
+                <form className = "chat_footerText" >
                     <input type = "text" value = {input}  onChange = {(e)=>{
                         setInput(e.target.value);
                     }} placeholder = "Start typing something">
@@ -102,7 +106,10 @@ function Chat() {
                     </input>
                     <button onClick ={sendMessage}  type = "submit">Send a message</button>
                 </form>
-                <Mic />
+                <IconButton>
+
+                    <Mic />
+                </IconButton>
             </div>
         </div>
     )

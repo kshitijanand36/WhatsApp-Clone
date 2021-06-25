@@ -40,10 +40,10 @@
 }
 
 .sidebar_searchContainer > input {
-  border: none;
   /* width: 100%; */
   margin-left: 10px;
   flex: 1;
+  border: none;
   outline: none;
   box-shadow: none;
 }

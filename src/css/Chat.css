@@ -60,7 +60,13 @@
   margin-left: auto;
   background-color: #dcf8c6;
 }
-
+.chat_footerText > input {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  flex: 1;
+  font-size: 14px;
+}
 .chat_timestamp {
   font-size: xx-small;
   margin-left: 10px;
