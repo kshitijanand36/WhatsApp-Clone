@@ -1,11 +1,11 @@
 import { Avatar, Icon, IconButton } from '@material-ui/core';
 import { Chat, DonutLarge, MoreVert, Room, SearchOutlined } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
-import "./Sidebar.css";
+import "../css/Sidebar.css";
 import SidebarChat from './SidebarChat';
 
-import db from "./firebase";
-import { useStateValue } from './StateProvider';
+import db from "../firebase";
+import { useStateValue } from '../StateProvider';
 
 function Sidebar() {
     const [rooms , setRooms] = useState([]);
@@ -25,7 +25,7 @@ function Sidebar() {
         <div className = "sidebar">
             <div className = "sidebar_header" >
 
-                <Avatar src = {user.photoURL}/>
+                <Avatar src = {user?.photoURL}/>
                 <div className = "sidebar_headerRight" >
                     <IconButton>
                         <DonutLarge/>

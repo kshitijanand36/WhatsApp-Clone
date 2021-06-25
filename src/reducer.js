@@ -7,6 +7,8 @@ export const actionTypes = {
 }
 
 const reducer = (state , action) =>{
+    console.log("this is tha action : " ,action);
+    console.log( "this is the state : ", state);
     if(action.type === actionTypes.SET_USER){
         return {
             ...state,
