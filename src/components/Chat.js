@@ -76,7 +76,9 @@ function Chat() {
                         {message.name}
                     </span>
                     {message.message}
-                    <span className = "chat_timestamp">{new Date(message.timestamp?.toDate()).toUTCString()}</span>
+                    <span className = "chat_timestamp">{new Date(message.timestamp?.toDate()).toLocaleString(undefined, {
+                    timeZone: "Asia/Kolkata" 
+                })}</span>
                     </p>
 
                 )
