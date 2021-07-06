@@ -25,7 +25,6 @@ function SidebarChat({addNewChat , id , name}) {
         setSeed(Math.floor(Math.random()*5000))
         if(id){
             db.collection("Rooms").doc(id).collection("messages").orderBy('timestamp' , 'desc').onSnapshot(snapshot =>(
-            
                 setMessage(snapshot.docs.map(doc=>doc.data()))
             ))
 
